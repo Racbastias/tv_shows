@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+            <div class='row align-items-center'>
+                <div class='col-12'>
+                    <h1 class='fs-1 my-3'>TV Show {{selectedshow.id}}</h1>
+                    <div class='col-12 my-5'>
+                        <div class="row mb-3">
+                            <h5 class="col-sm-2 fw-bold">Title</h5>
+                            <div class="col-sm-5">
+                                <h5>{{selectedshow.title}}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <h5 class="col-sm-2 fw-bold">Network</h5>
+                            <div class="col-sm-5">
+                                <h5>{{selectedshow.network.name}}</h5>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <h5 class="col-sm-2 fw-bold">Release Date</h5>
+                            <div class="col-sm-5">
+                                <h5>{{selectedshow.release_date}}</h5>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <h5 class="col-sm-2 fw-bold">Description</h5>
+                            <div class="col-sm-5">
+                                <h5>{{selectedshow.desc}}</h5>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="row mb-3">
+                            <h5 class="col-sm-2 fw-bold">Last Update</h5>
+                            <div class="col-sm-5">
+                                <h5>{{selectedshow.updated_at}}</h5>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto"><a href="/shows/{{selectedshow.id}}/edit" class="btn btn-outline-success"><i class="fas fa-edit"></i> Edit </a></div>
+                            <div class="col-auto"><a href="#" data-href="/shows/{{selectedshow.id}}/destroy" class="lnk-del btn btn-outline-danger" data-title="delete" data-bs-toggle="modal" data-bs-target="#confirm-delete"><i class="fas fa-backspace"></i> Destroy</a></div>
+                            <div class="col-auto"><h5><a href="/shows" class="btn btn-outline-primary"> Go Back </a></h5></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% endblock %}

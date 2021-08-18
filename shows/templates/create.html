@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+            <div class='row align-items-center'>
+                <h1 class='fs-1 my-3'>New Show</h1>
+                <div class='col-12 my-5'>
+                    <form method="POST" action="/shows/create" class="row g-3">
+                    {% csrf_token %}
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Title</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="title" value="" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Network</label>
+                            <div class="col-sm-5">
+                                <select class="form-select" aria-label="Default select example" name="network" required>
+                                <option selected>Select the Channel</option>
+                                    {% for channel in channel %}
+                                    <option value="{{channel.id}}" hide>{{channel.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label class="col-form-label col-sm-2">Release Date</label>
+                            <div class="col-sm-5">
+                                <input type="date" id="showdate" name="date" value="" class="mt-1 py-1 px-2 border border-1 rounded" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="textarea" class="form-label">Description</label>
+                            <textarea class="form-control" id="textarea" name="desc" value="" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="row justify-content-center">
+                            <div class="col-auto"><button type="submit" class="btn btn-outline-success">Create</button></div>
+                            <div class="col-auto"><h5 class="text-end float-end"><a href="/shows" class="btn btn-outline-primary"> Go Back </a></h5></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% endblock %}

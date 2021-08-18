@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+            <div class='row align-items-center'>
+                <div class='col-12'>
+                    <h1 class='fs-1 my-3'>Network {{selectedchannel.id}}</h1>
+                    <div class='col-12 my-5'>
+                        <div class="row mb-3">
+                            <h5 class="col-sm-2 fw-bold">Title</h5>
+                            <div class="col-sm-5">
+                                <h5>{{selectedchannel.name}}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <h5 class="col-sm-2 fw-bold">Shows</h5>
+                            <div class="col-sm-6">
+                                <ul>
+                                    {% for show in selectedchannel.shows.all %}
+                                    <li> ID: {{show.id}} - <a href="/shows/{{show.id}}" style="text-decoration:none">"{{show.title}}"</a>: {{show.desc}} ({{show.release_date}})</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row mb-3">
+                            <h5 class="col-sm-2 fw-bold">Last Update</h5>
+                            <div class="col-sm-5">
+                                <h5>{{selectedchannel.updated_at}}</h5>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto"><h5><a href="/shows" class="btn btn-outline-primary"> Go Shows </a></h5></div>
+                            <div class="col-auto"><a href="/network" class="btn btn-outline-success float-end"> Go Networks </a></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% endblock %}

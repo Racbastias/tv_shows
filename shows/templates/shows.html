@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+            <div class='row align-items-center text-center'>
+                <div class='col-12'>
+                    <h1 class='fs-1 my-3'>All Shows</h1>
+                    <table class="table table-light table-hover my-5 text-center">
+                        <thead>
+                            <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Release Date</th>
+                            <th scope="col">Network</th>
+                            <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="overflow-scroll">
+                            {% for show in show %}
+                            <tr>
+                            <td>{{show.id}}</td>
+                            <td>{{show.title}}</td>
+                            <td>{{show.release_date}}</td>
+                            <td><a href="/network/{{show.network.id}}">{{show.network.name}}</td>
+                            <td class="d-flex justify-content-center">
+                                <div class="d-inline m-0 p-0"><a href="/shows/{{show.id}}" class="btn btn-outline-primary" title="Watch"><i class="fas fa-eye"></i></a></div>
+                                <div class="d-inline m-0 p-0"><a href="/shows/{{show.id}}/edit" class="btn btn-outline-success" title="Edit"><i class="fas fa-edit"></i></a></div>
+                                <div class="d-inline m-0 p-0"><a href="#" data-href="/shows/{{show.id}}/destroy" class="lnk-del btn btn-outline-danger" data-title="delete" data-bs-toggle="modal" data-bs-target="#confirm-delete"><i class="fas fa-backspace"></i></a>
+                            </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="row justify-content-center">
+                        <div class="col-auto"><h5><a href="/shows/new" class="btn btn-outline-primary"> Add a New Show </a></h5></div>
+                        <div class="col-auto"><a href="/network" class="btn btn-outline-success float-end"> Go Networks </a></div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
+

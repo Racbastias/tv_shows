@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+            <div class='row align-items-center'>
+                <h1 class='fs-1 my-3'>ID: {{selectedshow.id}}</h1>
+                <div class='col-12 my-5'>
+                    <form method="POST" action="/shows/{{selectedshow.id}}/update" class="row g-3">
+                    {% csrf_token %}
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Title</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="title" value="{{selectedshow.title}}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Network</label>
+                            <div class="col-sm-5">
+                                <select class="form-select" aria-label="Default select example" name="network" required>
+                                <option selected value="{{selectedshow.network.id}}">{{selectedshow.network.name}}</option>
+                                    {% for channel in channel %}
+                                        {% if channel.id != selectedshow.network.id %}
+                                        <option value="{{channel.id}}">{{channel.name}}</option>
+                                        {% else %}
+                                        <option value="{{channel.id}}" disabled>{{channel.name}}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label class="col-form-label col-sm-2">Release Date</label>
+                            <div class="col-sm-5">
+                                <input type="date" id="showdate" name="date" value="{{selectedshow.release_date}}" class="mt-1 py-1 px-2 border border-1 rounded" required> {{selectedshow.release_date}}</input>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="textarea" class="form-label">Description</label>
+                            <textarea class="form-control" id="textarea" name="desc" value="" rows="3" required>{{selectedshow.desc}}</textarea>
+                        </div>
+                        
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-outline-success">Update</button>
+                            <h5 class="text-end float-end"><a href="/shows" class="btn btn-outline-primary"> Go Back </a></h5>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% endblock %}

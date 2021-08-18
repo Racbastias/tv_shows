@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+            <div class='row align-items-center text-center'>
+                <h1 class='fs-1 my-3'>All Networks</h1>
+                <table class="table table-light table-hover my-5 text-center">
+                    <thead>
+                        <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Shows</th>
+                        </tr>
+                    </thead>
+                    <tbody class="overflow-scroll">
+                        {% for channel in channel %}
+                        <tr>
+                        <td>{{channel.id}}</td>
+                        <td><a href="/network/{{channel.id}}">{{channel.name}}</a></td>
+                        <td>{% for show in channel.shows.all %} <a href="/shows/{{show.id}}" style="text-decoration:none">"{{show.title}}"</a> {% endfor %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="row justify-content-center">
+                    <div class="col-auto"><a href="/shows" class="btn btn-outline-primary"> Go Shows </a></div>
+                </div>
+            </div>
+{% endblock %}
