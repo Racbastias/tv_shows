@@ -67,9 +67,11 @@ def id(request, id):
 def edit(request, id):
     selectedshow = Shows.objects.get(id=id)
     channel = Tv.objects.all()
+    edit_date = selectedshow.release_date.strftime('%Y-%m-%d')
     context = {
         "selectedshow": selectedshow,
-        "channel": channel
+        "channel": channel,
+        "edit_date": edit_date
     }
     return render(request, 'edit.html', context)
 
@@ -88,7 +90,7 @@ def update(request, id):
     selectedshow.save()
     
     messages.warning(request, f'Your show {showtitle} has been updated')
-    return redirect("/shows")
+    return redirect(f'../{selectedshow.id}')
 
 def destroy(request, id):
     selectedshow = Shows.objects.get(id=id)
