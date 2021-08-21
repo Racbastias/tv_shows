@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from shows.models import Tv, Shows
 from django.contrib import messages
+from django.db import IntegrityError
 
 def index(request):
     return redirect('/shows')
@@ -42,16 +43,30 @@ def new(request): # Ok
     return render(request, 'create.html', context)
 
 def create(request): # Ok
-    showtitle = request.POST['title']
-    idnetwork = int(request.POST['network'])
-    date = request.POST['date']
-    desc = request.POST['desc']
+    errors = Shows.objects.basic_validator(request.POST)
     
-    #network = Tv.objects.get(id=int(idnetwork))
-    thisshow = Shows.objects.create(title=showtitle, release_date=date, network_id=idnetwork, desc=desc)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect(f'../shows/new')
+        
+    else:
+        
+        showtitle = request.POST['title']
+        idnetwork = int(request.POST['network'])
+        release_date = request.POST['release_date']
+        desc = request.POST['desc']
+        
+        try:
+            thisshow = Shows.objects.create(title=showtitle, release_date=release_date, network_id=idnetwork, desc=desc)
+        
+        except IntegrityError:
+            messages.error(request,"This shows already exist")
+            return redirect (f'../shows/new')
+        
+        messages.success(request, f'Your show {showtitle} has been created')
+        return redirect(f'/shows/{thisshow.id}')
     
-    messages.success(request, f'Your show {showtitle} has been created')
-    return redirect("/shows")
 
 def id(request, id):
     selectedshow = Shows.objects.get(id=id)
@@ -67,30 +82,35 @@ def id(request, id):
 def edit(request, id):
     selectedshow = Shows.objects.get(id=id)
     channel = Tv.objects.all()
-    edit_date = selectedshow.release_date.strftime('%Y-%m-%d')
+    release_date = selectedshow.release_date.strftime('%Y-%m-%d')
     context = {
         "selectedshow": selectedshow,
         "channel": channel,
-        "edit_date": edit_date
+        "release_date": release_date
     }
     return render(request, 'edit.html', context)
 
 def update(request, id):
     selectedshow = Shows.objects.get(id=id)
+    errors = Shows.objects.basic_validator(request.POST)
     channel = Tv.objects.all()
-    showtitle = request.POST['title']
-    idnetwork = int(request.POST['network'])
-    date = request.POST['date']
-    desc = request.POST['desc']
-    
-    selectedshow.title = showtitle
-    selectedshow.network_id = idnetwork
-    selectedshow.release_date = date
-    selectedshow.desc = desc
-    selectedshow.save()
-    
-    messages.warning(request, f'Your show {showtitle} has been updated')
-    return redirect(f'../{selectedshow.id}')
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect(f'../{selectedshow.id}/edit')
+    else:
+        showtitle = request.POST['title']
+        idnetwork = int(request.POST['network'])
+        date = request.POST['date'].strftime('%Y-%m-%d')
+        desc = request.POST['desc']
+        
+        selectedshow.title = showtitle
+        selectedshow.network_id = idnetwork
+        selectedshow.release_date = date
+        selectedshow.desc = desc
+        selectedshow.save()
+        messages.info(request, f'Your show {showtitle} has been updated')
+        return redirect(f'../{selectedshow.id}')
 
 def destroy(request, id):
     selectedshow = Shows.objects.get(id=id)

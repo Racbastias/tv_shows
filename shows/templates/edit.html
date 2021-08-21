@@ -9,14 +9,14 @@
                         <div class="row mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Title</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control text-secondary" name="title" value="{{selectedshow.title}}" required>
+                                <input type="text" class="form-control text-secondary" name="title" value="{{selectedshow.title}}">
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Network</label>
                             <div class="col-sm-5">
-                                <select class="form-select text-secondary" aria-label="Default select example" name="network" required>
+                                <select class="form-select text-secondary" aria-label="Default select example" name="network">
                                 <option selected value="{{selectedshow.network.id}}">{{selectedshow.network.name}}</option>
                                     {% for channel in channel %}
                                         {% if channel.id != selectedshow.network.id %}
@@ -32,13 +32,13 @@
                         <div class="row mb-3">
                             <label class="col-form-label col-sm-2">Release Date</label>
                             <div class="col-sm-5">
-                                <input type="date" id="showdate" name="date" value="{{edit_date}}" class="mt-1 py-1 px-2 border border-1 rounded text-secondary" required></input>
+                                <input type="date" id="showdate" name="release_date" value="{{edit_date}}" class="mt-1 py-1 px-2 border border-1 rounded text-secondary"></input>
                             </div>
                         </div>
                         
                         <div class="mb-3">
                             <label for="textarea" class="form-label">Description</label>
-                            <textarea class="form-control text-secondary" id="textarea" name="desc" value="" rows="3" required>{{selectedshow.desc}}</textarea>
+                            <textarea class="form-control text-secondary" id="textarea" name="desc" value="" rows="3">{{selectedshow.desc}}</textarea>
                         </div>
                         
                         <div class="row justify-content-center">

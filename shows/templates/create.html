@@ -9,15 +9,15 @@
                         <div class="row mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Title</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="title" value="" required>
+                                <input type="text" class="form-control" name="title" value="">
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Network</label>
                             <div class="col-sm-5">
-                                <select class="form-select" aria-label="Default select example" name="network" required>
-                                <option selected>Select the Channel</option>
+                                <select class="form-select" aria-label="Default select example" name="network">
+                                <option selected value="" hide>Select the Channel</option>
                                     {% for channel in channel %}
                                     <option value="{{channel.id}}" hide>{{channel.name}}</option>
                                     {% endfor %}
@@ -28,13 +28,13 @@
                         <div class="row mb-3">
                             <label class="col-form-label col-sm-2">Release Date</label>
                             <div class="col-sm-5">
-                                <input type="date" id="showdate" name="date" value="" class="mt-1 py-1 px-2 border border-1 rounded" required>
+                                <input type="date" id="showdate" name="release_date" value="" class="mt-1 py-1 px-2 border border-1 rounded">
                             </div>
                         </div>
                         
                         <div class="mb-3">
                             <label for="textarea" class="form-label">Description</label>
-                            <textarea class="form-control" id="textarea" name="desc" value="" rows="3" required></textarea>
+                            <textarea class="form-control" id="textarea" name="desc" value="" rows="3"></textarea>
                         </div>
                         
                         <div class="row justify-content-center">
