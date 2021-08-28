@@ -33,6 +33,16 @@
                 </div>
             </div>
         </div>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <img src = "{%if user.avatar == None %} {{avatars}} {% else %} {{user.avatar}}{% endif %}" alt="" width="50" height="50" class="d-inline-block align-text-top">
+                <h3 class="text-primary">{{user.first_name}} {{user.last_name}}</h3>
+                {%if user.avatar == None %}
+                {% else %}
+                <a class="btn btn-outline-danger" href="/logout">Logout</a>
+                {% endif %}
+            </div>
+        </nav>
         <div class='container'>
             {% block content%}
 
