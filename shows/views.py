@@ -1,3 +1,4 @@
+from shows.decorators import login_required
 import bcrypt
 from django.shortcuts import render, HttpResponse, redirect
 from shows.models import Tv, Shows, Users
@@ -81,14 +82,16 @@ def login(request):
     messages.success(request, f'Bienvenido {user.first_name} {user.last_name}')
     return redirect('/shows')
 
+@login_required
 def logout(request):
     avatars = 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'
-    request.session['user'] = None
+    del request.session['user']
     context={
         'avatars': avatars
     }
     return redirect('/register', context)
 
+@login_required
 def network(request):
     channel = Tv.objects.all()
     show = Shows.objects.all()
@@ -100,6 +103,7 @@ def network(request):
     }
     return render(request, 'channels.html', context)
 
+@login_required
 def tvinfo(request, id):
     selectedchannel = Tv.objects.get(id=id)
     show = Shows.objects.all()
@@ -111,6 +115,7 @@ def tvinfo(request, id):
     }
     return render(request, 'channel.html', context)
 
+@login_required
 def shows(request): # Ok
     channel = Tv.objects.all()
     show = Shows.objects.all()
@@ -122,6 +127,7 @@ def shows(request): # Ok
     }
     return render(request, 'shows.html', context)
 
+@login_required
 def new(request): # Ok
     channel = Tv.objects.all()
     show = Shows.objects.all()
@@ -133,6 +139,7 @@ def new(request): # Ok
     }
     return render(request, 'create.html', context)
 
+@login_required
 def create(request): # Ok
     errors = Shows.objects.basic_validator(request.POST)
     
@@ -160,6 +167,7 @@ def create(request): # Ok
         return redirect(f'/shows/{thisshow.id}')
     
 
+@login_required
 def id(request, id):
     selectedshow = Shows.objects.get(id=id)
     channel = Tv.objects.all()
@@ -173,6 +181,7 @@ def id(request, id):
     }
     return render(request, 'tv_show.html', context)
 
+@login_required
 def edit(request, id):
     selectedshow = Shows.objects.get(id=id)
     channel = Tv.objects.all()
@@ -186,6 +195,7 @@ def edit(request, id):
     }
     return render(request, 'edit.html', context)
 
+@login_required
 def update(request, id):
     selectedshow = Shows.objects.get(id=id)
     errors = Shows.objects.basic_validator(request.POST)
@@ -208,6 +218,7 @@ def update(request, id):
         messages.info(request, f'Your show {showtitle} has been updated')
         return redirect(f'../{selectedshow.id}')
 
+@login_required
 def destroy(request, id):
     selectedshow = Shows.objects.get(id=id)
     temp = selectedshow.title
